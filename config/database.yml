@@ -48,7 +48,9 @@ test:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
 production:
-  <<: *default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
   database: Dentaku_production
   username: Dentaku
   password: <%= ENV['DENTAKU_DATABASE_PASSWORD'] %>

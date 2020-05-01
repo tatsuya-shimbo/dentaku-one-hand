@@ -36,21 +36,21 @@ $(function() {
   });
   //変換器
   function change(key){
-    var keyArray1 = ["2", "3", "4", "5", "w", "e", "r", "t", "s", "d", "f", "g", "x", "c", "v", "b", " ", "j"];
-    var  valueArray = ["7", "8", "9", "/", "4", "5", "6", "x", "1", "2", "3", "-", "0", ".", "C", "+", "=", "AC"]
+    var keyArray1 = ["2", "3", "4", "5", "w", "e", "r", "t", "s", "d", "f", "g", "x", "c", "v", "b", " ", "j", "a", "z"];
+    var  valueArray = ["7", "8", "9", "/", "4", "5", "6", "x", "1", "2", "3", "-", "0", ".", "C", "+", "=", "AC", "0", "00"];
     var keyNum = keyArray1.indexOf(key);
     return valueArray[keyNum];
   }
   //計算
   function calculate(value){
     var display = $(".result").text().replace(/\r?\n/g, '').trim();
-    var numArray = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+    var numArray = ["00", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
     var symbolArray = ["+", "-", "x", "/"];
 
     if (numArray.includes(value)) {
       if (swich == 0) {
         if (display == 0) {
-          if (value == "0") {
+          if (value == "0" || value == "00") {
 
           } else {
             $(".result").empty();
