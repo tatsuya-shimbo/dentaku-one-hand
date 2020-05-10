@@ -17,18 +17,19 @@ $(function() {
     var value = $(this).find(".main").text().replace(/\r?\n/g, '').trim();
 
     calculate(value);
-
+    dot();
 
   });
   //キーボード
   $("input").on("keyup", function(){
     var key = $("input").val();
-    keyArray2 = key.split("");
+    var keyArray2 = key.split("");
 
     for (var i = 0; i < keyArray2.length; i++) {
       var value = change(keyArray2[i]);
 
       calculate(value);
+      dot();
     }
 
 
@@ -37,9 +38,44 @@ $(function() {
   //変換器
   function change(key){
     var keyArray1 = ["2", "3", "4", "5", "w", "e", "r", "t", "s", "d", "f", "g", "x", "c", "v", "b", " ", "j", "a", "z"];
-    var  valueArray = ["7", "8", "9", "/", "4", "5", "6", "x", "1", "2", "3", "-", "0", ".", "C", "+", "=", "AC", "0", "00"];
+    var  valueArray = ["7", "8", "9", "/", "4", "5", "6", "x", "1", "2", "3", "+", "0", ".", "C", "-", "=", "AC", "0", "00"];
     var keyNum = keyArray1.indexOf(key);
     return valueArray[keyNum];
+  }
+  //　点表示
+  function dot(){
+    var display = $(".result").text().replace(/\r?\n/g, '').trim();
+    var displayA = Math.floor(display*1);
+    var displayB = display*1 - displayA;
+    displayA = String(displayA);
+    var displayArray = displayA.split("");
+    var length = displayArray.length;
+    var countMax = Math.floor((length - 1)/3);
+    var displayArray2 = Array(length + countMax);
+    displayArray2.fill(0);
+    var count = 0;
+    var count3 = 0;
+
+    for (var i = 1; i <= length; i++) {
+      displayArray2[length + countMax - count - i] = displayArray[length -i]
+      count3 = count3 + 1;
+      if (count3 == 3 && count < countMax) {
+        count3 = 0;
+        count = count + 1;
+        displayArray2[length + countMax - count - i] = ",";
+      }
+    }
+
+    var display3 = "";
+    for (var i = 0; i < displayArray2.length; i++) {
+      if (i == displayArray2.length - 1) {
+        displayArray2[i] = displayArray2[i]*1 + displayB;
+      }
+      display3 = display3 + displayArray2[i];
+
+    }
+
+    $(".display").text(display3);
   }
   //計算
   function calculate(value){
@@ -58,9 +94,16 @@ $(function() {
           }
         } else {
           if (reset == 1) {
-            $(".result").empty(value);
+            if (value == "00"){
+              $(".result").text("0");
+            } else {
+              $(".result").empty(value);
+              $(".result").append(value);
+            }
+          } else {
+            $(".result").append(value);
           }
-          $(".result").append(value);
+
         }
         reset = 0;
       }
